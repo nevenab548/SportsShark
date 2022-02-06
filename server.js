@@ -15,7 +15,7 @@ app.set('view engine','ejs');
 /*app.get('/',(req,res)=>
 {
     res.render('index');
-});*/
+});
 app.get('/about',(req,res)=>
 {
      res.render('about');
@@ -24,7 +24,7 @@ app.get('/dodajProizvod',(req,res)=>
 {
      res.render('dodajProizvod');
 });
-
+*/
 app.get('/dodajProizvod',(req,res)=>
 {
 const proizvod=new Proizvod({
