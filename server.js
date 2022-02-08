@@ -4,6 +4,7 @@ var path = require('path');
 const mongoose = require('mongoose');
 const Product = require('./models/product');
 const User = require('./models/user');
+const Order = require('./models/order')
 const app = express();
 var path = require('path');
 var logger = require('morgan');
@@ -26,11 +27,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/dodajProizvod', (req, res) => {
+app.post('/dodaj-proizvod', (req, res) => {
+
+    const productRequest = req.body;
+
     const proizvod = new Product({
-        tip: 'majca',
-        title: 'lacosta',
-        opis: 'lepa'
+        type: productRequest.type,
+        title: productRequest.title,
+        description: productRequest.description,
+        price: productRequest.price
     });
     proizvod.save()
         .then((result) => {
@@ -41,7 +46,7 @@ app.get('/dodajProizvod', (req, res) => {
         })
 });
 
-app.post('/dodajKorisnika', (req, res) => {
+app.post('/dodaj-korisnika', (req, res) => {
 
     const userRequest = req.body;
 
@@ -57,8 +62,8 @@ app.post('/dodajKorisnika', (req, res) => {
         city: userRequest.city
     });
     user.save()
-        .then((response) => {
-            res.send(response)
+        .then((result) => {
+            res.send(result)
         })
         .catch((err) => {
             res.send(err);
@@ -75,6 +80,79 @@ app.get('/svi-korisnici', (req, res) => {
         })
 })
 
+app.get('/svi-proizvodi', (req, res) => {
+    Product.find()
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+})
+
+app.post('/napravi-order', (req, res) => {
+    const productArrayRequest = req.body.products;
+    const priceTotal = req.body.priceTotal;
+    //Products je niz id-eva za product, pa se to posle za svaki posebno pribavlja
+    const order = new Order({
+        products: productArrayRequest,
+        priceTotal: priceTotal
+    })
+    order.save()
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+})
+
+app.post('/pribavi-order', (req, res) => {
+    orderId = req.body.orderId;
+    Order.findOne({ "_id": orderId })
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+})
+
+app.post('/kategorija-proizvoda', (req, res) => {
+    const kategorijaRequest = req.body.category;
+
+    Product.find({ "type": kategorijaRequest })
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+})
+
+app.post('/obrisi-korisnika', (req, res) => {
+    const userNameRequest = req.body.userName;
+
+    User.deleteOne({ "userName": userNameRequest })
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+})
+
+app.post('/obrisi-proizvod', (req, res) => {
+    const titleRequest = req.body.title;
+
+    Product.deleteOne({ "title": titleRequest })
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+})
 
 //middlewear
 app.use(express.static('public'));

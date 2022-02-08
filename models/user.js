@@ -8,7 +8,8 @@ const userSchema = new Schema({
     },//Naziv proizvoda
     userName: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },//Opis proizvoda
     password: {
         type: String,
@@ -16,7 +17,8 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     firstName: {
         type: String,
@@ -37,6 +39,10 @@ const userSchema = new Schema({
     city: {
         type: String,
         required: true
+    },
+    orders: {
+        type: [String],
+        required: false
     }
 }, { timestamps: true });
 

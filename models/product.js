@@ -8,7 +8,8 @@ const productSchema = new Schema({
     },//Naziv proizvoda
     title: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },//Opis proizvoda
     description: {
         type: String,
