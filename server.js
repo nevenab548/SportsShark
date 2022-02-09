@@ -73,6 +73,17 @@ app.post('/dodaj-korisnika', (req, res) => {
         })
 })
 
+app.post('/pribavi-korisnika', (req, res) => {
+    let username = req.body.token.token;
+    User.findOne({ "userName": username })
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+})
+
 //Vraca sve korisnike iz users GET
 app.get('/svi-korisnici', (req, res) => {
     User.find()
