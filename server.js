@@ -74,7 +74,7 @@ app.post('/dodaj-korisnika', (req, res) => {
 })
 
 app.post('/pribavi-korisnika', (req, res) => {
-    let username = req.body.token.token;
+    let username = req.body.username;
     User.findOne({ "userName": username })
         .then((result) => {
             res.send(result);
@@ -137,9 +137,9 @@ app.post('/napravi-order', (req, res) => {
 //to moze da stoji na profilu, da ne bi odma sve povlacila
 app.post('/pribavi-order', (req, res) => {
     orderId = req.body.orderId;
-    Order.findOne({ "_id": orderId })
+    Order.findOne({ "id": orderId })
         .then((result) => {
-            res.send(result);
+            res.send({ status: 200, body: result });
         })
         .catch((err) => {
             console.log(err);
@@ -186,13 +186,11 @@ app.post('/obrisi-proizvod', (req, res) => {
         })
 })
 
-//Ovo ne mora samo admin da prise, nego moze i korisnik svoji order da obrise, ma da se komplikuje malo
-//jer mora i iz korisnikovog niza za ordere taj id koji se obrise da se ukloni, tako da mozda i nemoj ovo
-//ako ne smislis neki lak nacin
+//Ovde mora da se obrise i order u korisniku!!!!
 app.post('/obrisi-order', (req, res) => {
     const orderIdRequest = req.body.orderId;
 
-    Order.deleteOne({ "_id": orderIdRequest })
+    Order.deleteOne({ "id": orderIdRequest })
         .then((result) => {
             res.send(result);
         })
@@ -234,7 +232,7 @@ app.post('/edit-product', (req, res) => {
     const productEdited = req.body;
     const productId = req.body.productId;
 
-    Product.updateOne({ "_id": productId }, { $set: { "title": productEdited.title, "description": productEdited.description, "price": productEdited.price } })
+    Product.updateOne({ "id": productId }, { $set: { "title": productEdited.title, "description": productEdited.description, "price": productEdited.price } })
         .then((result) => {
             res.send(result);
         })

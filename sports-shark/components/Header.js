@@ -23,7 +23,7 @@ const Header = () => {
                         </li>
                         <li>
                             <a href='/porudzbine' className='nav-link px-2 text-white'>
-                                Porudzbine
+                                Orders
                             </a>
                         </li>
 
@@ -32,17 +32,17 @@ const Header = () => {
                     <div className='text-end'>
                         <a href={'/profil'}>
                             <button type='button' className='btn btn-outline-light me-2'>
-                                Profil
+                                Profile
                             </button>
                         </a>
                         <a href={'/prijava'}>
                             <button type='button' className='btn btn-outline-light me-2'>
-                                Prijava
+                                Log In
                             </button>
                         </a>
                         <a href={'/registracija'}>
                             <button type='button' className='btn btn-warning'>
-                                Registracija
+                                Register
                             </button>
                         </a>
                     </div>

@@ -61,7 +61,7 @@ function Registracija() {
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                    "type": regular,
+                    "type": 'regular',
                     "firstName": ime,
                     "lastName": prezime,
                     "userName": username,
@@ -90,15 +90,15 @@ function Registracija() {
                     <div className="col-md-6">
                         <div className="card">
                             <header className="card-header">
-                                <h4 className="card-title mt-2">Registracija</h4>
+                                <h4 className="card-title mt-2">Sign Up</h4>
                             </header>
                             <article className="card-body">
                                 <form>
-                                    <h5 className="card-title mt-4"> Licni podaci </h5>
+                                    <h5 className="card-title mt-4"> Personal data </h5>
                                     <hr/>
                                     <div className="form-row">
                                         <div className="col form-group">
-                                            <label>Ime </label>
+                                            <label>First Name </label>
                                             <input id="inputName" type="text" className="form-control" placeholder=""
                                                    required value={userData.ime}
                                                    onChange={event =>
@@ -108,7 +108,7 @@ function Registracija() {
                                                    }/>
                                         </div>
                                         <div className="col form-group">
-                                            <label>Prezime</label>
+                                            <label>Last Name</label>
                                             <input id="inputLastName" type="text" className="form-control"
                                                    placeholder=" " required value={userData.prezime}
                                                    onChange={event =>
@@ -118,7 +118,7 @@ function Registracija() {
                                                    }/>
                                         </div>
                                         <div className="col form-group">
-                                            <label>Adresa</label>
+                                            <label>Address</label>
                                             <input id="inputAddress" type="text" className="form-control"
                                                    placeholder=" " required value={userData.adresa}
                                                    onChange={event =>
@@ -128,7 +128,7 @@ function Registracija() {
                                                    }/>
                                         </div>
                                         <div className="col form-group">
-                                            <label>Grad</label>
+                                            <label>City/Town</label>
                                             <input id="inputCity" type="text" className="form-control"
                                                    placeholder=" " required value={userData.grad}
                                                    onChange={event =>
@@ -138,7 +138,7 @@ function Registracija() {
                                                    }/>
                                         </div>
                                         <div className="col form-group">
-                                            <label>Drzava</label>
+                                            <label>Country</label>
                                             <input id="inputCountry" type="text" className="form-control"
                                                    placeholder=" " required value={userData.drzava}
                                                    onChange={event =>
@@ -150,7 +150,7 @@ function Registracija() {
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col">
-                                            <label>Email adresa</label>
+                                            <label>Email address</label>
                                             <input id="inputEmailOne" type="email" className="form-control"
                                                    placeholder="" required value={userData.email}
                                                    onChange={event =>
@@ -164,7 +164,7 @@ function Registracija() {
                                     <hr/>
                                     <div className="form-row">
                                         <div className="form-group col">
-                                            <label>Korisnicko ime</label>
+                                            <label>Username</label>
                                             <input id="inputUserName" type="text" className="form-control"
                                                    placeholder="" required value={userData.username}
                                                    onChange={event =>
@@ -176,7 +176,7 @@ function Registracija() {
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col">
-                                            <label>Sifra</label>
+                                            <label>Password</label>
                                             <input id="inputPasswordOne" type="password" className="form-control"
                                                    placeholder="" required value={userData.sifra}
                                                    onChange={event =>
@@ -188,7 +188,7 @@ function Registracija() {
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col">
-                                            <label>Ponovi sifru</label>
+                                            <label>Repeat password</label>
                                             <input id="inputPasswordTwo" type="password" className="form-control"
                                                    placeholder="" required value={userData.sifraProvera}
                                                    onChange={event =>
@@ -201,18 +201,16 @@ function Registracija() {
                                     <br/>
                                     <div className="form-group">
                                         <button id="registerBtn" type="submit"
-                                                className="btn btn-primary btn-block" onClick={handleSubmit}> Registruj
-                                            se
+                                                className="btn btn-primary btn-block" onClick={handleSubmit}> Sign Up
                                         </button>
                                     </div>
                                     <br/>
-                                    <small className="text-muted">Klikom na `Registruj se` dugme, potvrdjujes da
-                                        prihvatas
-                                        nase <br/> <a href=""> Uslove koriscenja. </a> </small>
+                                    <small className="text-muted">By clicking the Sign Up button you accept our
+                                         <br/> <a href=""> terms and conditions. </a> </small>
                                 </form>
                             </article>
-                            <div className="border-top card-body text-center">Vec imas nalog? <a href="/prijava">Prijavi
-                                se</a>
+                            <div className="border-top card-body text-center">Already have an account? <a href="/prijava">Log
+                                In</a>
                             </div>
                         </div>
                     </div>

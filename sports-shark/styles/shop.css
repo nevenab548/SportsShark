@@ -1,0 +1,40 @@
+.row {
+    display: flex;
+    justify-content: space-around;
+}
+.row.center {
+    align-items: center;
+}
+.cart-col {
+    flex: 1;
+    height: 500px;
+}
+.prod-col {
+    flex: 2;
+}
+.block {
+    background-color: #e0e0e0;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 0.5rem;
+}
+.text-right {
+    text-align: right;
+}
+img.small {
+    max-height: 8rem;
+}
+button.add {
+    background-color: #40c0f0;
+    width: 1.5rem;
+}
+button.remove {
+    background-color: #f04040;
+    width: 1.5rem;
+}
+button.badge {
+    background-color: #f04040;
+    border: none;
+    color: #ffffff;
+    width: 1.5rem;
+}

@@ -21,7 +21,7 @@ export function Prijava() {
         })
         if (response.status === 200) {
             console.log('Login success.')
-            const {token} = {'token':username};
+            const {token} = {'token': username};
             await login({token})
         } else {
             alert('Neuspesno logovanje.')
@@ -40,13 +40,13 @@ export function Prijava() {
                     <div className="col-md-6">
                         <div className="card">
                             <header className="card-header">
-                                <h4 className="card-title mt-2">Prijava</h4>
+                                <h4 className="card-title mt-2">Log In</h4>
                             </header>
                             <article className="card-body">
                                 <form onSubmit={handleSubmit}>
                                     <div className="form-row">
                                         <div className="form-group col">
-                                            <label>Korisnicko ime</label>
+                                            <label>Username</label>
                                             <input id="inputLogin" type="text"
                                                    className="form-control"
                                                    placeholder="" required
@@ -60,7 +60,7 @@ export function Prijava() {
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col">
-                                            <label>Sifra</label>
+                                            <label>Password</label>
                                             <input id="inputPasswordLogin" type="password" className="form-control"
                                                    placeholder="" required value={userData.sifra}
                                                    onChange={event =>
@@ -73,14 +73,14 @@ export function Prijava() {
                                     <br/>
                                     <div className="form-group">
                                         <button id="loginBtn" type="submit"
-                                                className="btn btn-primary btn-block"> Prijavi se
+                                                className="btn btn-primary btn-block"> Log In
                                         </button>
                                     </div>
                                     {userData.error && <p className="error">Error: {userData.error}</p>}
                                 </form>
                             </article>
-                            <div className="border-top card-body text-center">Nemas nalog? <a href='/registracija'>Registruj
-                                se</a>
+                            <div className="border-top card-body text-center">Don't have an account? <a
+                                href='/registracija'>Sign Up </a>
                             </div>
                         </div>
                     </div>

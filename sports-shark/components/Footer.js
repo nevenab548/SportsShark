@@ -9,17 +9,17 @@ const Footer = () => {
                         </a>
                     </li>
                     <li className='nav-item'>
-                        <a href='/igrice' className='nav-link px-2 text-muted'>
-                            Igrice
+                        <a href='/porudzbine' className='nav-link px-2 text-muted'>
+                            Orders
                         </a>
                     </li>
                     <li className='nav-item'>
-                        <a href='/anketa' className='nav-link px-2 text-muted'>
-                            Anketa
+                        <a href='/shop' className='nav-link px-2 text-muted'>
+                            Shop
                         </a>
                     </li>
                 </ul>
-                <p className='text-center text-muted'>© 2021 The Sharks</p>
+                <p className='text-center text-muted'>© 2022 The Sharks</p>
             </footer>
         </div>
     );
