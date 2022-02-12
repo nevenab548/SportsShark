@@ -7,20 +7,18 @@ function Main(props) {
     const [sortData, setSortData] = useState('');
     const [categoryData, setCategoryData] = useState('');
 
-    var byPrice = products.slice(0);
+    let productsShow = products;
+    if(categoryData.category) {
+        productsShow = productsShow.filter((product) => product.type == categoryData.category);
+    }
+    var byPrice = productsShow.slice(0);
     byPrice.sort(function (a, b) {
         return parseFloat(a.price) - parseFloat(b.price);
     });
-    var byPriceDesc = products.slice(0);
+    var byPriceDesc = productsShow.slice(0);
     byPriceDesc.sort(function (a, b) {
         return parseFloat(b.price) - parseFloat(a.price);
     });
-    let productsShow = products;
-    if(categoryData.category !== 'All categories') {
-        productsShow = productsShow.filter((product) => product.type == categoryData.category);
-    } else {
-        productsShow = products;
-    }
     if(sortData.sort==='asc') {
         productsShow = byPrice;
     } else if(sortData.sort==='desc') {
@@ -48,7 +46,7 @@ function Main(props) {
                 )
             }
             }>
-                <option>All categories</option>
+                <option value={''}>All categories</option>
                 <option value="Socks">Socks</option>
                 <option value="Shirts">Shirts</option>
                 <option value="Shoes">Shoes</option>
