@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form'
 function Main(props) {
     const {products, onAdd} = props;
     const [sortData, setSortData] = useState('');
+    const [categoryData, setCategoryData] = useState('');
 
     var byPrice = products.slice(0);
     byPrice.sort(function (a, b) {
@@ -15,6 +16,11 @@ function Main(props) {
         return parseFloat(b.price) - parseFloat(a.price);
     });
     let productsShow = products;
+    if(categoryData.category !== 'All categories') {
+        productsShow = productsShow.filter((product) => product.type == categoryData.category);
+    } else {
+        productsShow = products;
+    }
     if(sortData.sort==='asc') {
         productsShow = byPrice;
     } else if(sortData.sort==='desc') {
@@ -34,6 +40,21 @@ function Main(props) {
                 <option>No sorting</option>
                 <option value="asc">Price ascending</option>
                 <option value="desc">Price descending</option>
+            </Form.Select>
+            <hr/>
+            <Form.Select aria-label="Default select example" onChange={event => {
+                setCategoryData(
+                    Object.assign({}, categoryData, {category: event.target.value})
+                )
+            }
+            }>
+                <option>All categories</option>
+                <option value="Socks">Socks</option>
+                <option value="Shirts">Shirts</option>
+                <option value="Shoes">Shoes</option>
+                <option value="Shorts">Shorts</option>
+                <option value="Trousers">Trousers</option>
+                <option value="Footballs">Footballs</option>
             </Form.Select>
             <hr/>
             <div className="row">

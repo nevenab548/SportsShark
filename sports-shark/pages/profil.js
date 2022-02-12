@@ -131,7 +131,8 @@ const Profil = (props) => {
     })
 
     const [userData, setUserData] = useState({
-        order: ''
+        order: '',
+        user:props.token,
     })
 
     const handleShow = (product) => {
@@ -173,14 +174,15 @@ const Profil = (props) => {
         event.preventDefault()
         setUserData(Object.assign({}, userData, { error: '' }))
 
-        const order = userData.nazivAnkete;
+        const order = userData.order;
+        const user = userData.user;
 
         const response = await fetch("http://localhost:3000/obrisi-order", {
             method: 'POST',
             headers: {
                 'Access-Control-Allow-Origin': '*'
             },
-            body: JSON.stringify({ "orderId": order }),
+            body: JSON.stringify({ "orderId": order, 'username':user }),
         }).then(r => {
             alert("Success!");
             window.location.reload(false);

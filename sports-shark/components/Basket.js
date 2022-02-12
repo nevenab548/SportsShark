@@ -35,7 +35,7 @@ export default function Basket(props) {
 
         postData(url)
             .then(data => {
-                alert('uspeh')
+                alert('Successful purchase!')
                 Router.push("/porudzbine");
             });
     }

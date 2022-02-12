@@ -27,7 +27,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Dodaje se proizvod u products, request parametre kao u modelu
 app.post('/dodaj-proizvod', (req, res) => {
 
     const productRequest = req.body;
@@ -48,7 +47,6 @@ app.post('/dodaj-proizvod', (req, res) => {
         })
 });
 
-//Dodaje se korisnik u users, request parametre kao u modelu
 app.post('/dodaj-korisnika', (req, res) => {
 
     const userRequest = req.body;
@@ -75,7 +73,6 @@ app.post('/dodaj-korisnika', (req, res) => {
 
 app.post('/pribavi-korisnika', (req, res) => {
     let username = req.body.username;
-    console.log("Uso u pribavljanje");
     User.findOne({ "userName": username })
         .then((result) => {
             res.send(result);
@@ -85,7 +82,6 @@ app.post('/pribavi-korisnika', (req, res) => {
         })
 })
 
-//Vraca sve korisnike iz users GET
 app.get('/svi-korisnici', (req, res) => {
     User.find()
         .then((result) => {
@@ -96,7 +92,6 @@ app.get('/svi-korisnici', (req, res) => {
         })
 })
 
-//Vraca sve proizvode iz products GET
 app.get('/svi-proizvodi', (req, res) => {
     Product.find()
         .then((result) => {
@@ -107,8 +102,6 @@ app.get('/svi-proizvodi', (req, res) => {
         })
 })
 
-//Kreira order, parametri za request kao u modelu, products je array id-eva od product-a,
-//a priceTotal je zbirna cena svih proizvoda, i salje se userName od user-a, kako bi se update njegov niz od order-a
 app.post('/napravi-order', (req, res) => {
     const userRequest = req.body.userName;
     const productArrayRequest = req.body.products;
@@ -137,14 +130,15 @@ app.post('/napravi-order', (req, res) => {
 //a za pribavljanje svakog producta za order, tek kad korisnik klikne na taj order kao da ga pregleda,
 //to moze da stoji na profilu, da ne bi odma sve povlacila
 app.post('/pribavi-order', (req, res) => {
+    let first_response = '';
     orderId = req.body.orderId;
     Order.findOne({ "id": orderId })
         .then((result) => {
-            Product.find({ "id": { $in: result.products } })
+            first_response = result;
+            Product.find({ "_id": { $in: result.products } })
                 .then(result2 => {
-                    res.send({ status: 200, body: { ...result, "realProducts": result2 } })
+                    res.send({ status: 200, body: { 'priceTotal': first_response.priceTotal,'createdAt':first_response.createdAt, "realProducts": result2 } })
                 })
-            res.send({ status: 200, body: result });
         })
         .catch((err) => {
             console.log(err);
@@ -193,12 +187,14 @@ app.post('/obrisi-proizvod', (req, res) => {
 
 //Ovde mora da se obrise i order u korisniku!!!!
 app.post('/obrisi-order', (req, res) => {
+
     const orderIdRequest = req.body.orderId;
-    const userIdRequest = req.body.userId;
+    const userIdRequest = req.body.username;
+    console.log(req.body);
 
     Order.deleteOne({ "id": orderIdRequest })
         .then((result) => {
-            User.updateOne({ "id": userIdRequest }, { $pop: { "orders": orderIdRequest } })
+            User.updateOne({ "userName": userIdRequest }, { $pull: { "orders": orderIdRequest } })
                 .then((result2) => {
                     res.send(result)
                 })

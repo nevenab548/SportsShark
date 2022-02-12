@@ -13,13 +13,15 @@ const Porudzbine = (props) => {
     const [show, setShow] = useState(false);
     const [order, setOrder] = useState('');
     const [price, setPrice] = useState('');
+    const [products, setProducts] = useState([]);
 
     const handleClose = () => setShow(false);
     const handleShow = (event) => {
         setOrder(event.target.name)
         setShow(true);
-        orderProducts(order).then(res=>{
+        orderProducts(order).then(res => {
             setPrice(res.body.priceTotal)
+            setProducts(res.body.realProducts)
         });
     }
 
@@ -73,7 +75,18 @@ const Porudzbine = (props) => {
                 <Modal.Header closeButton>
                     <Modal.Title>{order}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Order total price: {price}$</Modal.Body>
+                <Modal.Body>Order total price: {price}$
+                    {products.map((product, ind) => {
+                        return (
+                            <div>
+                                <img className="small" src={product.picture} alt={product.name}/>
+                                <h3>{product.name}</h3>
+                                <p>{product.description}</p>
+                                <div>${product.price}</div>
+                            </div>
+                        )
+                    })}
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
