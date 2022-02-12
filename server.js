@@ -75,6 +75,7 @@ app.post('/dodaj-korisnika', (req, res) => {
 
 app.post('/pribavi-korisnika', (req, res) => {
     let username = req.body.username;
+    console.log("Uso u pribavljanje");
     User.findOne({ "userName": username })
         .then((result) => {
             res.send(result);

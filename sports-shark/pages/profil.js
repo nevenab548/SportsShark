@@ -1,17 +1,17 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Router from "next/router";
 import fetch from "isomorphic-unfetch";
 import nextCookie from "next-cookies";
-import {withAuthSync} from "../utils/auth";
-import {Button, Modal} from "react-bootstrap";
+import { withAuthSync } from "../utils/auth";
+import { Button, Modal } from "react-bootstrap";
 
 
 function MyVerticallyCenteredModal(props) {
 
     const [productData, setProductData] = useState({
-        id:props.product._id,
+        id: props.product._id,
         title: '',
         description: '',
         price: '',
@@ -19,7 +19,7 @@ function MyVerticallyCenteredModal(props) {
 
     const handleEdit = async (event) => {
         event.preventDefault()
-        setProductData(Object.assign({}, productData, {error: ''}))
+        setProductData(Object.assign({}, productData, { error: '' }))
 
         const id = productData.id;
         const title = productData.title;
@@ -39,7 +39,7 @@ function MyVerticallyCenteredModal(props) {
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
-                    'id' : id,
+                    'id': id,
                     "title": title,
                     "description": description,
                     "price": price,
@@ -48,10 +48,11 @@ function MyVerticallyCenteredModal(props) {
             return response
         }
 
-        postData(url)
+        postData("http://localhost:3000/edit-product")
             .then(data => {
                 alert("Edit success!");
                 props.onHide();
+                window.location.reload(false);
             });
     }
 
@@ -70,43 +71,43 @@ function MyVerticallyCenteredModal(props) {
             <Modal.Body>
                 <form>
                     <h5 className="card-title mt-4"> Product data </h5>
-                    <hr/>
+                    <hr />
                     <div className="col form-group">
                         <label>Title </label>
                         <input value={productData.title} type="text"
-                               className="form-control" placeholder={props.product.title}
-                               required
-                               onChange={event =>
-                                   setProductData(
-                                       Object.assign({}, productData, {title: event.target.value})
-                                   )
-                               }/>
+                            className="form-control" placeholder={props.product.title}
+                            required
+                            onChange={event =>
+                                setProductData(
+                                    Object.assign({}, productData, { title: event.target.value })
+                                )
+                            } />
                     </div>
                     <div className="col form-group">
                         <label>Description </label>
                         <input value={productData.description} type="text"
-                               className="form-control" placeholder={props.product.description}
-                               required
-                               onChange={event =>
-                                   setProductData(
-                                       Object.assign({}, productData, {description: event.target.value})
-                                   )
-                               }/>
+                            className="form-control" placeholder={props.product.description}
+                            required
+                            onChange={event =>
+                                setProductData(
+                                    Object.assign({}, productData, { description: event.target.value })
+                                )
+                            } />
                     </div>
                     <div className="col form-group">
                         <label>Price </label>
                         <input value={productData.price} type="text"
-                               className="form-control" placeholder={props.product.price}
-                               required
-                               onChange={event =>
-                                   setProductData(
-                                       Object.assign({}, productData, {price: event.target.value})
-                                   )
-                               }/>
+                            className="form-control" placeholder={props.product.price}
+                            required
+                            onChange={event =>
+                                setProductData(
+                                    Object.assign({}, productData, { price: event.target.value })
+                                )
+                            } />
                     </div>
-                    <hr/>
+                    <hr />
                     <button type="submit"
-                            className="btn btn-secondary btn-block" onClick={handleEdit}> Edit
+                        className="btn btn-secondary btn-block" onClick={handleEdit}> Edit
                     </button>
                 </form>
             </Modal.Body>
@@ -123,7 +124,7 @@ const Profil = (props) => {
     const [show, setShow] = useState(false);
 
     const [productData, setProductData] = useState({
-        id:'',
+        id: '',
         title: '',
         description: '',
         price: '',
@@ -148,7 +149,7 @@ const Profil = (props) => {
             headers: {
                 'Access-Control-Allow-Origin': '*'
             },
-            body: JSON.stringify({"title": product}),
+            body: JSON.stringify({ "title": product }),
         }).then(r => {
             alert("Success!");
             window.location.reload(false);
@@ -170,7 +171,7 @@ const Profil = (props) => {
 
     async function handleSubmit(event) {
         event.preventDefault()
-        setUserData(Object.assign({}, userData, {error: ''}))
+        setUserData(Object.assign({}, userData, { error: '' }))
 
         const order = userData.nazivAnkete;
 
@@ -179,7 +180,7 @@ const Profil = (props) => {
             headers: {
                 'Access-Control-Allow-Origin': '*'
             },
-            body: JSON.stringify({"orderId": order}),
+            body: JSON.stringify({ "orderId": order }),
         }).then(r => {
             alert("Success!");
             window.location.reload(false);
@@ -190,28 +191,28 @@ const Profil = (props) => {
 
     return (
         <div>
-            <Header/>
+            <Header />
             <div className="card card-cascade container rounded bg-white mt-5 mb-5 d-flex justify-content-center">
                 <div className="row">
                     <div>
                         <div className="d-flex flex-column align-items-center text-center p-3 py-5"><img
                             className="rounded-circle mt-5" width="150px"
-                            src={src} alt={""}/><span
-                            className="text-black-50">{token}</span><span> </span></div>
+                            src={src} alt={""} /><span
+                                className="text-black-50">{token}</span><span> </span></div>
                     </div>
                 </div>
             </div>
             <div className={'card card-cascade container rounded bg-white mt-5 mb-5 d-flex justify-content-center'}
-                 style={{maxWidth: '200px'}}>
+                style={{ maxWidth: '200px' }}>
                 <p>Pick an order:</p>
-                <hr/>
-                <div style={{padding: "5px"}}>
-                    <select value={userData.order} style={{width: "100%"}}
-                            onChange={event =>
-                                setUserData(
-                                    Object.assign({}, userData, {order: event.target.value})
-                                )
-                            }>
+                <hr />
+                <div style={{ padding: "5px" }}>
+                    <select value={userData.order} style={{ width: "100%" }}
+                        onChange={event =>
+                            setUserData(
+                                Object.assign({}, userData, { order: event.target.value })
+                            )
+                        }>
                         {array.map(type => {
                             return <option key={Math.random()}>{type}</option>
                         })}
@@ -223,34 +224,34 @@ const Profil = (props) => {
                 {showAdmin === true &&
                     <table className="table table-striped">
                         <thead>
-                        <tr>
-                            <th scope="col"/>
-                            <th scope="col">Article</th>
-                            <th scope="col"/>
-                            <th scope="col" className="text-center"/>
-                            <th scope="col" className="text-right"/>
-                            <th scope="col" className="text-right"/>
-                        </tr>
+                            <tr>
+                                <th scope="col" />
+                                <th scope="col">Article</th>
+                                <th scope="col" />
+                                <th scope="col" className="text-center" />
+                                <th scope="col" className="text-right" />
+                                <th scope="col" className="text-right" />
+                            </tr>
                         </thead>
                         <tbody>
-                        {array2.map((product, ind) => {
-                            return (
-                                <tr key={ind}>
-                                    <td><img style={{width: "100px", height: "70px"}} src={product.picture} alt={""}/>
-                                    </td>
-                                    <td>{product.title}</td>
-                                    <td/>
-                                    <td/>
-                                    <td className="text-right">
-                                        <Button onClick={() => handleShow(product)}>Edit product</Button>
-                                    </td>
-                                    <td className="text-right">
-                                        <Button name={product.title} onClick={handleDelete}>Delete product</Button>
-                                    </td>
-                                </tr>
+                            {array2.map((product, ind) => {
+                                return (
+                                    <tr key={ind}>
+                                        <td><img style={{ width: "100px", height: "70px" }} src={product.picture} alt={""} />
+                                        </td>
+                                        <td>{product.title}</td>
+                                        <td />
+                                        <td />
+                                        <td className="text-right">
+                                            <Button onClick={() => handleShow(product)}>Edit product</Button>
+                                        </td>
+                                        <td className="text-right">
+                                            <Button name={product.title} onClick={handleDelete}>Delete product</Button>
+                                        </td>
+                                    </tr>
 
-                            )
-                        })}
+                                )
+                            })}
                         </tbody>
                     </table>
 
@@ -261,7 +262,7 @@ const Profil = (props) => {
                 onHide={() => setShow(false)}
                 product={productData}
             />
-            <Footer/>
+            <Footer />
         </div>
     )
 }
@@ -272,14 +273,14 @@ Profil.getInitialProps = async (ctx) => {
     const redirectOnError = () =>
         typeof window !== "undefined"
             ? Router.push("/prijava")
-            : ctx.res.writeHead(302, {Location: "/prijava"}).end();
+            : ctx.res.writeHead(302, { Location: "/prijava" }).end();
 
     const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
             'Access-Control-Allow-Origin': '*'
         },
-        body: JSON.stringify({"username": token.token}),
+        body: JSON.stringify({ "username": token.token }),
     });
 
     const products = await fetch("http://localhost:3000/svi-proizvodi", {
@@ -289,7 +290,7 @@ Profil.getInitialProps = async (ctx) => {
     });
 
     if (response.status === 200) {
-        return {...await response.json(), 'products': await products.json()};
+        return { ...await response.json(), 'products': await products.json() };
     } else {
         return await redirectOnError();
     }
