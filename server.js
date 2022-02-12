@@ -140,6 +140,10 @@ app.post('/pribavi-order', (req, res) => {
     orderId = req.body.orderId;
     Order.findOne({ "id": orderId })
         .then((result) => {
+            Product.find({ "id": { $in: result.products } })
+                .then(result2 => {
+                    res.send({ status: 200, body: { ...result, "realProducts": result2 } })
+                })
             res.send({ status: 200, body: result });
         })
         .catch((err) => {
@@ -190,10 +194,14 @@ app.post('/obrisi-proizvod', (req, res) => {
 //Ovde mora da se obrise i order u korisniku!!!!
 app.post('/obrisi-order', (req, res) => {
     const orderIdRequest = req.body.orderId;
+    const userIdRequest = req.body.userId;
 
     Order.deleteOne({ "id": orderIdRequest })
         .then((result) => {
-            res.send(result);
+            User.updateOne({ "id": userIdRequest }, { $pop: { "orders": orderIdRequest } })
+                .then((result2) => {
+                    res.send(result)
+                })
         })
         .catch((err) => {
             console.log(err);
